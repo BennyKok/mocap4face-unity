@@ -1,0 +1,28 @@
+<dependencies>
+  <androidPackages>
+    <!-- <repositories>
+      <repository>https://facemoji.jfrog.io/artifactory/default-maven-local/</repository>
+    </repositories>
+
+    <androidPackage spec="co.facemoji:mocap4face:0.1.0">
+      <repositories>
+        <repository>https://facemoji.jfrog.io/artifactory/default-maven-local/</repository>
+      </repositories>
+    </androidPackage> -->
+
+    <androidPackage spec= "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"/>
+    <androidPackage spec= "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.4"/>
+    <androidPackage spec= "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0"/>
+    <androidPackage spec= "org.jetbrains.kotlin:kotlin-reflect:1.5.31"/>
+    <androidPackage spec= "com.benasher44:uuid:0.3.1"/>
+    <androidPackage spec= "co.touchlab:stately-common:1.1.4"/>
+    <androidPackage spec= "co.touchlab:stately-isolate:1.1.4-a1"/>
+    <androidPackage spec= "com.squareup.okhttp3:okhttp:4.9.0"/>
+    <androidPackage spec= "org.tensorflow:tensorflow-lite:2.6.0"/>
+    <androidPackage spec= "org.tensorflow:tensorflow-lite-gpu:2.6.0"/>
+  </androidPackages>
+
+  <iosPods>
+  
+  </iosPods>
+</dependencies>
