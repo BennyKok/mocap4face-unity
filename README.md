@@ -37,7 +37,7 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages\moca
 ## Expected Result
 
 ### Android
-With everything setup correctly, if you run on Android, and create a script to call out the Initialize with your api key, you will be seeing the log, and the native SDK should be initialized.
+With everything setup correctly, if you run on Android, and create a script to call out the `Initialize` method with your api key, you will be seeing the logs belows, and the native SDK should be initialized.
 ```csharp
 FacemojiAPI.Instance.Initialize("YOU API KEY");
 ```
