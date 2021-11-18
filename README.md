@@ -3,7 +3,7 @@ This is an unofficial initial Unity integration for [mocap4face by Facemoji](htt
 
 ## Status
 
-Currently in a very early stage got the following things to complete before it is usable in Unity level.
+Currently in a very early stage, need to get the following things to complete before it is usable in Unity.
 
 Android
 - [x] Initialize the sdk from Unity to mocap4face android native sdk
