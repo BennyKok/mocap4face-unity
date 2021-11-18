@@ -25,6 +25,7 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages\moca
 ### Android Requirements
 - This package uses [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver), please set it up first!
 - The mocap4face aar library is not included, you will need to download in the Facemoji discord server #Dev channel, which require 0.2.0+, after downloading, put it into the Android folder as below.
+
 ![](.screenshots/2021-11-18-23-26-52.png)
 
 
