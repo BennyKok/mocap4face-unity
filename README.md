@@ -19,7 +19,7 @@ Suggested to clone this as submodule into your packages folder
 
 
 ```
-git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages\mocap4face-unity 
+git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/mocap4face-unity 
 ```
 
 ### Android Requirements
