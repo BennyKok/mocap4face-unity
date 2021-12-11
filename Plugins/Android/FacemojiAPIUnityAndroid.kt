@@ -49,9 +49,11 @@ class FacemojiAPIUnityAndroid {
             val blendshapes = trackerResult.blendshapes +
                     faceRotationToSliders(trackerResult.rotationQuaternion)
 
-            onActivateListener?.onBlendShapeValues(blendshapes)
+            blendshapes.forEach { (t, u) ->
+                onActivateListener?.onBlendShapeValues(t, u)
+            }
         } else {
-            onActivateListener?.onBlendShapeValues(emptyMap())
+//            onActivateListener?.onBlendShapeValues(emptyMap())
         }
     }
 
@@ -80,6 +82,6 @@ class FacemojiAPIUnityAndroid {
     interface OnActivateListener {
         fun onActivate(activated: Boolean)
         fun onBlendShapeNames(names: List<String>)
-        fun onBlendShapeValues(input: Map<String, Float>)
+        fun onBlendShapeValues(key: String, value: Float)
     }
 }

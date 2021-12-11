@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class FacemojiAPI
 {
+    public Dictionary<string, float> blendShapesInput = new Dictionary<string, float>();
+
 #if UNITY_ANDROID
     private static readonly string facemojiClassName = "co.facemoji.api.FacemojiAPI";
     private static readonly string facemojiBridgeClassName = "co.facemoji.mocap4face.FacemojiAPIUnityAndroid";
@@ -19,12 +21,12 @@ public class FacemojiAPI
     {
         public Action<bool> onActivateAction;
         public Action<List<string>> onBlendShapeNamesAction;
-        public Action<Dictionary<string, float>> onBlendShapeValuesAction;
+        public Action<string, float> onBlendShapeValuesAction;
 
         public OnActivateListener(
             Action<bool> onActivateAction,
             Action<List<string>> onBlendShapeNamesAction,
-            Action<Dictionary<string, float>> onBlendShapeValuesAction
+            Action<string, float> onBlendShapeValuesAction
         ) : base(
             "co.facemoji.mocap4face.FacemojiAPIUnityAndroid$OnActivateListener")
         {
@@ -35,7 +37,7 @@ public class FacemojiAPI
 
         void onActivate(bool activated) => onActivateAction?.Invoke(activated);
         void onBlendShapeNames(List<string> names) => onBlendShapeNamesAction?.Invoke(names);
-        void onBlendShapeValues(Dictionary<string, float> input) => onBlendShapeValuesAction?.Invoke(input);
+        void onBlendShapeValues(string key, float value) => onBlendShapeValuesAction?.Invoke(key, value);
     }
 #endif
 
@@ -80,6 +82,7 @@ public class FacemojiAPI
         if (activated)
         {
             Debug.Log("Facemoji: API activation was successful");
+            CreateCameraTracker();
         }
         else
         {
@@ -93,13 +96,13 @@ public class FacemojiAPI
         Debug.Log(result);
     }
 
-    void OnBlendShapeValues(Dictionary<string, float> input)
+    void OnBlendShapeValues(string key, float value)
     {
-        var result = input.Aggregate("Facemoji: OnBlendShapeValues: ",
-            (current, item) => current + ($"{item.Key} : {item.Value}" + "\n"));
-        Debug.Log(result);
+        // var result = input.Aggregate("Facemoji: OnBlendShapeValues: ",
+        //     (current, item) => current + ($"{item.Key} : {item.Value}" + "\n"));
+        Debug.Log($"{key} : {value}");
+        blendShapesInput[key] = value;
     }
-
 
     public void Pause()
     {
@@ -107,6 +110,7 @@ public class FacemojiAPI
             return;
 
 #if UNITY_ANDROID
+        if (facemojiAPIClass == null) return;
         facemojiAPIClass.Call("pause");
 #endif
         Debug.Log("Facemoji: Pause");
@@ -117,6 +121,7 @@ public class FacemojiAPI
         if (Application.isEditor)
             return;
 
+        if (facemojiAPIClass == null) return;
         if (!isCameraCreated)
         {
             CreateCameraTracker();
@@ -144,7 +149,8 @@ public class FacemojiAPI
             return;
 
 #if UNITY_ANDROID
-        facemojiAPIClass.Call("Facemoji: CreateCameraTracker", activity);
+        Debug.Log("Facemoji: CreateCameraTracker");
+        facemojiAPIClass.Call("createCameraTracker", activity);
         isCameraCreated = true;
 #endif
     }
