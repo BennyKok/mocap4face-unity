@@ -7,8 +7,10 @@ Currently in a very early stage, need to get the following things to complete be
 
 Android
 - [x] Initialize the sdk from Unity to mocap4face android native sdk
-- [ ] Start the camera tracker from Unity
-- [ ] Get back the blend shapes data form native sdk
+- [x] Start the camera tracker from Unity
+- [x] Get back the blend shapes data form native sdk
+- [] Demo scene
+- [] Better data passing, from Android to unity
 
 iOS
 - [ ] Not yet started
