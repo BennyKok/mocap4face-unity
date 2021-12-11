@@ -82,7 +82,7 @@ public class FacemojiAPI
         if (activated)
         {
             Debug.Log("Facemoji: API activation was successful");
-            CreateCameraTracker();
+            // CreateCameraTracker();
         }
         else
         {

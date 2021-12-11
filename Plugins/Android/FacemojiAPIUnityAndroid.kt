@@ -62,7 +62,7 @@ class FacemojiAPIUnityAndroid {
         cameraTracker.trackerDelegate = this::onTracker
         cameraTracker.blendshapeNames.whenDone { names ->
             val headPoseNames = faceRotationToSliders(Quaternion.identity).keys
-            onActivateListener?.onBlendShapeNames((names + headPoseNames).sorted());
+//            onActivateListener?.onBlendShapeNames((names + headPoseNames).sorted());
         }
         this.cameraTracker = cameraTracker
     }
@@ -81,7 +81,7 @@ class FacemojiAPIUnityAndroid {
 
     interface OnActivateListener {
         fun onActivate(activated: Boolean)
-        fun onBlendShapeNames(names: List<String>)
+//        fun onBlendShapeNames(names: List<String>)
         fun onBlendShapeValues(key: String, value: Float)
     }
 }
