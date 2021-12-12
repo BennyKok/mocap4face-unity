@@ -9,8 +9,8 @@ Android
 - [x] Initialize the sdk from Unity to mocap4face android native sdk
 - [x] Start the camera tracker from Unity
 - [x] Get back the blend shapes data form native sdk
-- [ ] Demo scene
-- [ ] Better data passing, from Android to unity
+- [x] Demo scene
+- [x] Better data passing, from Android to unity;
 
 iOS
 - [ ] Not yet started
@@ -26,7 +26,7 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/moca
 
 ### Android Requirements
 - This package uses [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver), please set it up first!
-- The mocap4face aar library is not included, you will need to download in the Facemoji discord server #Dev channel, which require 0.2.0+, after downloading, put it into the Android folder as below.
+- The mocap4face aar library is not included, you will need to download in the Facemoji discord server #Dev channel ([message link](https://discord.com/channels/904757187522478131/905871468972343307/907051992915001345)), which require 0.2.0+, after downloading, put it into the Plugin/Android folder in your Assets dir.
 
 ![](.screenshots/2021-11-18-23-26-52.png)
 
@@ -39,11 +39,13 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/moca
 ## Expected Result
 
 ### Android
-With everything setup correctly, if you run on Android, and create a script to call out the `Initialize` method with your api key, you will be seeing the logs belows, and the native SDK should be initialized.
-```csharp
-FacemojiAPI.Instance.Initialize("YOU API KEY");
-```
-![](.screenshots/2021-11-18-233537.png)
+Before running the demo scene on your android devices, put in the API key in the inspector.
+
+![](.screenshots/Screenshot_2021-12-12_155632.png)
+
+Then you will be seeing the blendshapes view as below.
+
+![](.screenshots/Screenshot_20211212-155331.png)
 
 ### iOS
 Not yet started
