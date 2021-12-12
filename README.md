@@ -31,8 +31,6 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/moca
 ![](.screenshots/2021-11-18-23-26-52.png)
 
 
-
-
 ### iOS Requirements
 - Not yet started
 
@@ -45,7 +43,7 @@ Before running the demo scene on your android devices, put in the API key in the
 
 Then you will be seeing the blendshapes view as below.
 
-![](.screenshots/Screenshot_20211212-155331.png)
+<img src=".screenshots/Screenshot_20211212-155331.png" width="300"/>
 
 ### iOS
 Not yet started
