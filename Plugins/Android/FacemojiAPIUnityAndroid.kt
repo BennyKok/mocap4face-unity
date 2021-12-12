@@ -49,11 +49,12 @@ class FacemojiAPIUnityAndroid {
             val blendshapes = trackerResult.blendshapes +
                     faceRotationToSliders(trackerResult.rotationQuaternion)
 
-            blendshapes.forEach { (t, u) ->
-                onActivateListener?.onBlendShapeValues(t, u)
-            }
+            onActivateListener?.onBlendShapeValues(blendshapes.values.toFloatArray())
+
+            val rot = trackerResult.rotationQuaternion.xyzw;
+            onActivateListener?.onHeadRotation(rot.x,rot.y,rot.z,rot.w)
         } else {
-//            onActivateListener?.onBlendShapeValues(emptyMap())
+            onActivateListener?.onBlendShapeValues(emptyArray<Float>().toFloatArray())
         }
     }
 
@@ -62,7 +63,7 @@ class FacemojiAPIUnityAndroid {
         cameraTracker.trackerDelegate = this::onTracker
         cameraTracker.blendshapeNames.whenDone { names ->
             val headPoseNames = faceRotationToSliders(Quaternion.identity).keys
-//            onActivateListener?.onBlendShapeNames((names + headPoseNames).sorted());
+            onActivateListener?.onBlendShapeNames((names + headPoseNames));
         }
         this.cameraTracker = cameraTracker
     }
@@ -81,7 +82,8 @@ class FacemojiAPIUnityAndroid {
 
     interface OnActivateListener {
         fun onActivate(activated: Boolean)
-//        fun onBlendShapeNames(names: List<String>)
-        fun onBlendShapeValues(key: String, value: Float)
+        fun onBlendShapeNames(names: List<String>)
+        fun onBlendShapeValues(input: FloatArray?)
+        fun onHeadRotation(x: Float, y: Float, z: Float, w: Float)
     }
 }
