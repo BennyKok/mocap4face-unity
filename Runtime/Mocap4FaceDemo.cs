@@ -19,10 +19,7 @@ namespace Facemoji
 
         private void Start()
         {
-            if (Permission.HasUserAuthorizedPermission(Permission.Camera))
-            {
-            }
-            else
+            if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
             {
                 Permission.RequestUserPermission(Permission.Camera);
             }
@@ -34,13 +31,9 @@ namespace Facemoji
         private void OnApplicationFocus(bool hasFocus)
         {
             if (hasFocus)
-            {
                 FacemojiAPI.Instance.Resume();
-            }
             else
-            {
                 FacemojiAPI.Instance.Pause();
-            }
         }
 
         private void OnApplicationQuit()
@@ -73,13 +66,13 @@ namespace Facemoji
                 for (int i = 0; i < blendShapesNames.Length; i++)
                 {
                     rect.x = 20;
-                    rect.width = 100f;
+                    rect.width = 200f;
                     GUI.Label(rect, blendShapesNames[i], _style);
                     rect.x = 300;
                     GUI.Label(rect, blendShapesInput[i].ToString(), _style);
                     rect.x = 600;
                     GUI.Box(rect, "", _BgBarStyle);
-                    rect.width = 100f * blendShapesInput[i];
+                    rect.width = 200f * blendShapesInput[i];
                     GUI.Box(rect, "", _BarStyle);
 
                     rect.y += 40;
