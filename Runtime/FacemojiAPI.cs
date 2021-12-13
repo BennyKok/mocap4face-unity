@@ -136,12 +136,12 @@ namespace Facemoji
             if (Application.isEditor)
                 return;
 
+#if UNITY_ANDROID
             if (facemojiAPIClass == null) return;
             if (!isCameraCreated)
             {
                 CreateCameraTracker();
             }
-#if UNITY_ANDROID
             facemojiAPIClass.Call("resume");
 #endif
             Debug.Log("Facemoji: Resume");
