@@ -27,12 +27,16 @@ namespace Facemoji
             public Action<string[]> onBlendShapeNamesAction;
             public Action<float[]> onBlendShapeValuesAction;
             public Action<Quaternion> onHeadRotationAction;
+            public Action<bool> onDisconnectedAction;
+
+            private bool connected;
 
             public OnActivateListener(
                 Action<bool> onActivateAction,
                 Action<string[]> onBlendShapeNamesAction,
                 Action<float[]> onBlendShapeValuesAction,
-                Action<Quaternion> onHeadRotationAction
+                Action<Quaternion> onHeadRotationAction,
+                Action<bool> onDisconnectedAction
             ) : base(
                 "co.facemoji.mocap4face.FacemojiAPIUnityAndroid$OnActivateListener")
             {
@@ -40,6 +44,7 @@ namespace Facemoji
                 this.onBlendShapeNamesAction = onBlendShapeNamesAction;
                 this.onBlendShapeValuesAction = onBlendShapeValuesAction;
                 this.onHeadRotationAction = onHeadRotationAction;
+                this.onDisconnectedAction = onDisconnectedAction;
             }
 
             void onActivate(bool activated) => onActivateAction?.Invoke(activated);
@@ -63,6 +68,18 @@ namespace Facemoji
 
             void onBlendShapeValues(float[] input)
             {
+                if (input.Length == 0 && connected)
+                {
+                    connected = false;
+                    onDisconnectedAction?.Invoke(connected);
+                }
+                if (input.Length > 0 && !connected)
+                {
+                    // on connected
+                    connected = true;
+                    onDisconnectedAction?.Invoke(connected);
+                }
+                
                 if (input.Length == 0)
                     valueList = emptyValueList;
                 else
@@ -98,7 +115,8 @@ namespace Facemoji
             Action<bool> onActivateAction,
             Action<string[]> onBlendShapeNamesAction,
             Action<float[]> onBlendShapeValuesAction,
-            Action<Quaternion> onHeadRotationAction
+            Action<Quaternion> onHeadRotationAction,
+            Action<bool> onDisconnectedAction
         )
         {
             if (Application.isEditor)
@@ -114,7 +132,7 @@ namespace Facemoji
                 apiKey,
                 activity,
                 new OnActivateListener(onActivateAction, onBlendShapeNamesAction, onBlendShapeValuesAction,
-                    onHeadRotationAction)
+                    onHeadRotationAction,onDisconnectedAction)
             );
 #endif
         }

@@ -25,7 +25,7 @@ namespace Facemoji
             }
 
             FacemojiAPI.Instance.Initialize(apiKey,
-                OnActivate, OnBlendShapeNames, OnBlendShapeValues, OnHeadRotation);
+                OnActivate, OnBlendShapeNames, OnBlendShapeValues, OnHeadRotation,OnDisconnected);
         }
 
         private void OnApplicationFocus(bool hasFocus)
@@ -77,6 +77,19 @@ namespace Facemoji
 
                     rect.y += 40;
                 }
+            }
+        }
+        
+        void OnDisconnected(bool connected)
+        {
+            if (!connected)
+            {
+                Debug.Log("Facemoji: Lost Face Focus");
+                FacemojiAPI.Instance.Resume();
+            }
+            else
+            {
+                Debug.Log("Facemoji: Gain Face Focus");
             }
         }
 
