@@ -30,7 +30,7 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/moca
 
 ![](.screenshots/2021-11-18-23-26-52.png)
 
-- If you encoutered error like duplicated kotlin lib error, try enabling these options in player settings -> publising, and then force resolve once again.
+- If you encoutered error like duplicated kotlin lib, try enabling these options in player settings -> publishing, and then force resolve once again.
 
 ![image](https://user-images.githubusercontent.com/18395202/149381299-dda66e37-8b7e-4dda-bf87-63a8e2f96752.png)
 
