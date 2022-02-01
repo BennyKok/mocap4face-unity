@@ -12,7 +12,7 @@ import co.facemoji.ui.CameraTextureView
 import kotlin.math.max
 import kotlin.math.min
 
-class FacemojiAPIUnityAndroid {
+class FacemojiAPIUnity {
 
     private var cameraTracker: CameraTracker? = null
     private var onActivateListener: OnActivateListener? = null;
