@@ -37,7 +37,7 @@ git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/moca
 
 
 ### iOS Requirements
-- Not yet started
+- Please download the `mocap4face` iOS framework from the [Facemoji developer portal](https://studio.facemoji.co).
 
 ## Expected Result
 

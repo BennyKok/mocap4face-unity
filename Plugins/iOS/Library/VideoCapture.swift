@@ -1,3 +1,5 @@
+// Origin: Mocap4Face sample code from Alter (Facemoji).
+
 /*
  See LICENSE.md for this sample’s licensing information.
 */
