@@ -56,5 +56,5 @@ Please chime in the Alter Discord for further discussion if you would like to he
 You can find the Discord link in the page here -> [mocap4face GitHub Page](https://github.com/facemoji/mocap4face).
 
 ## Credit
-- Original Unity wrapper with Android support by @BennyKok.
-- iOS port (including unsafe memory access) by @tomthecarrot from @0xTELEPORTAL.
+- Original Unity wrapper with Android support by [Benny Kok (@BennyKok)](https://github.com/BennyKok/).
+- iOS port (including unsafe memory access) by [Thomas Suarez (@tomthecarrot)](https://github.com/tomthecarrot/) from [Teleportal (0xTELEPORTAL)](https://github.com/0xTELEPORTAL/).
