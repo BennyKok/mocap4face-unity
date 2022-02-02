@@ -14,7 +14,6 @@ namespace Facemoji
         private GUIStyle _BarStyle;
         private GUIStyle _BgBarStyle;
 
-        private float[] blendShapesInput;
         private string[] blendShapesNames;
 
         private void Start()
@@ -24,21 +23,21 @@ namespace Facemoji
                 Permission.RequestUserPermission(Permission.Camera);
             }
 
-            FacemojiAPI.Instance.Initialize(apiKey,
-                OnActivate, OnBlendShapeNames, OnBlendShapeValues, OnHeadRotation,OnDisconnected);
+            FacemojiMocap.Instance.Initialize(apiKey,
+                OnActivate, OnBlendShapeNames, null, OnHeadRotation,OnDisconnected);
         }
 
         private void OnApplicationFocus(bool hasFocus)
         {
             if (hasFocus)
-                FacemojiAPI.Instance.Resume();
+                FacemojiMocap.Instance.Resume();
             else
-                FacemojiAPI.Instance.Pause();
+                FacemojiMocap.Instance.Pause();
         }
 
         private void OnApplicationQuit()
         {
-            FacemojiAPI.Instance.Destroy();
+            FacemojiMocap.Instance.Destroy();
         }
 
         private void OnGUI()
@@ -58,21 +57,21 @@ namespace Facemoji
                 _BgBarStyle.normal.background = Texture2D.grayTexture;
             }
 
-            GUI.Label(rect, "blendShapesInput: " + blendShapesInput, _style);
             rect.y += 40;
 
-            if (blendShapesInput != null && blendShapesNames != null)
+            if (blendShapesNames != null)
             {
                 for (int i = 0; i < blendShapesNames.Length; i++)
                 {
+                    float value = FacemojiMocap.Instance.GetBlendShapeValue(i);
                     rect.x = 20;
                     rect.width = 200f;
                     GUI.Label(rect, blendShapesNames[i], _style);
                     rect.x = 300;
-                    GUI.Label(rect, blendShapesInput[i].ToString(), _style);
+                    GUI.Label(rect, value.ToString(), _style);
                     rect.x = 600;
                     GUI.Box(rect, "", _BgBarStyle);
-                    rect.width = 200f * blendShapesInput[i];
+                    rect.width = 200f * value;
                     GUI.Box(rect, "", _BarStyle);
 
                     rect.y += 40;
@@ -85,7 +84,7 @@ namespace Facemoji
             if (!connected)
             {
                 Debug.Log("Facemoji: Lost Face Focus");
-                FacemojiAPI.Instance.Resume();
+                FacemojiMocap.Instance.Resume();
             }
             else
             {
@@ -98,7 +97,7 @@ namespace Facemoji
             if (activated)
             {
                 Debug.Log("Facemoji: API activation was successful");
-                FacemojiAPI.Instance.Resume();
+                FacemojiMocap.Instance.Resume();
             }
             else
             {
@@ -111,11 +110,6 @@ namespace Facemoji
             var result = names.Aggregate("Facemoji: OnBlendShapeNames: ", (current, item) => current + (item + ", "));
             Debug.Log(result);
             blendShapesNames = names;
-        }
-
-        protected virtual void OnBlendShapeValues(float[] input)
-        {
-            blendShapesInput = input;
         }
 
         protected virtual void OnHeadRotation(Quaternion rot)

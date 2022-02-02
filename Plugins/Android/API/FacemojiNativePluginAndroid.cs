@@ -1,3 +1,5 @@
+#if UNITY_ANDROID
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,21 +8,21 @@ using UnityEngine.UI;
 
 namespace Facemoji
 {
-    public class FacemojiAPI
+    public class FacemojiNativePluginAndroid: IFacemojiNativePlugin
     {
-#if UNITY_ANDROID
+        private static FacemojiNativePluginAndroid I;
         private static readonly string facemojiClassName = "co.facemoji.api.FacemojiAPI";
-        private static readonly string facemojiBridgeClassName = "co.facemoji.mocap4face.FacemojiAPIUnityAndroid";
+        private static readonly string facemojiBridgeClassName = "co.facemoji.mocap4face.FacemojiAPIUnity";
         private AndroidJavaObject facemojiAPIClass;
         private AndroidJavaClass unityAndroidPlayer;
         private AndroidJavaObject activity;
         private bool isCameraCreated = false;
+        private float[] valueList;
 
         class OnActivateListener : AndroidJavaProxy
         {
             // public Dictionary<string, float> blendShapesInput = new Dictionary<string, float>();
             public string[] namesList;
-            public float[] valueList;
             public float[] emptyValueList;
 
             public Action<bool> onActivateAction;
@@ -38,7 +40,7 @@ namespace Facemoji
                 Action<Quaternion> onHeadRotationAction,
                 Action<bool> onDisconnectedAction
             ) : base(
-                "co.facemoji.mocap4face.FacemojiAPIUnityAndroid$OnActivateListener")
+                "co.facemoji.mocap4face.FacemojiAPIUnity$OnActivateListener")
             {
                 this.onActivateAction = onActivateAction;
                 this.onBlendShapeNamesAction = onBlendShapeNamesAction;
@@ -81,10 +83,10 @@ namespace Facemoji
                 }
                 
                 if (input.Length == 0)
-                    valueList = emptyValueList;
+                    FacemojiNativePluginAndroid.I.valueList = emptyValueList;
                 else
-                    valueList = input;
-                onBlendShapeValuesAction?.Invoke(valueList);
+                    FacemojiNativePluginAndroid.I.valueList = input;
+                onBlendShapeValuesAction?.Invoke(FacemojiNativePluginAndroid.I.valueList);
             }
 
             void onHeadRotation(float x, float y, float z, float w)
@@ -92,23 +94,10 @@ namespace Facemoji
                 onHeadRotationAction?.Invoke(new Quaternion(x, y, z, w));
             }
         }
-#endif
 
-        private static FacemojiAPI instance;
-
-        public static FacemojiAPI Instance
+        public FacemojiNativePluginAndroid()
         {
-            get
-            {
-                if (instance == null)
-                    instance = new FacemojiAPI();
-
-                return instance;
-            }
-        }
-
-        private FacemojiAPI()
-        {
+            FacemojiNativePluginAndroid.I = this;
         }
 
         public void Initialize(string apiKey,
@@ -120,10 +109,10 @@ namespace Facemoji
         )
         {
             if (Application.isEditor)
+            {
                 return;
+            }
 
-#if UNITY_ANDROID
-            Debug.Log("Facemoji: Initialize from Unity");
             facemojiAPIClass = new AndroidJavaObject(facemojiBridgeClassName);
             unityAndroidPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             activity = unityAndroidPlayer.GetStatic<AndroidJavaObject>("currentActivity");
@@ -134,58 +123,72 @@ namespace Facemoji
                 new OnActivateListener(onActivateAction, onBlendShapeNamesAction, onBlendShapeValuesAction,
                     onHeadRotationAction,onDisconnectedAction)
             );
-#endif
+
+            Debug.Log("[Facemoji] Initialized.");
         }
 
         public void Pause()
         {
             if (Application.isEditor)
+            {
                 return;
+            }
 
-#if UNITY_ANDROID
-            if (facemojiAPIClass == null) return;
+            if (null == facemojiAPIClass) return;
             facemojiAPIClass.Call("pause");
-#endif
-            Debug.Log("Facemoji: Pause");
+
+            Debug.Log("[Facemoji] Paused.");
         }
 
         public void Resume()
         {
             if (Application.isEditor)
+            {
                 return;
+            }
 
-#if UNITY_ANDROID
-            if (facemojiAPIClass == null) return;
+            if (null == facemojiAPIClass) return;
             if (!isCameraCreated)
             {
                 CreateCameraTracker();
             }
             facemojiAPIClass.Call("resume");
-#endif
-            Debug.Log("Facemoji: Resume");
+            
+            Debug.Log("[Facemoji] Resumed.");
         }
 
         public void Destroy()
         {
             if (Application.isEditor)
+            {
                 return;
+            }
 
-#if UNITY_ANDROID
             facemojiAPIClass.Call("destroy");
-#endif
-            Debug.Log("Facemoji: Destroy");
+            
+            Debug.Log("[Facemoji] Destroyed.");
         }
 
         public void CreateCameraTracker()
         {
             if (Application.isEditor)
+            {
                 return;
+            }
 
-#if UNITY_ANDROID
-            Debug.Log("Facemoji: CreateCameraTracker");
+            Debug.Log("[Facemoji] CreateCameraTracker");
             facemojiAPIClass.Call("createCameraTracker", activity);
             isCameraCreated = true;
-#endif
+
+            Debug.Log("[Facemoji] Created camera tracker.");
+        }
+
+        public float GetBlendShapeValue(int idx)
+        {
+            // Included in the interface for parity with the iOS native plugin.
+            return valueList[idx];
         }
     }
 }
+
+#endif

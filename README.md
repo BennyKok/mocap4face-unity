@@ -1,62 +1,60 @@
 # mocap4face-unity 
-This is an unofficial initial Unity integration for [mocap4face by Facemoji](https://github.com/facemoji/mocap4face)
+This is an unofficial Unity integration for [mocap4face by Alter](https://github.com/facemoji/mocap4face) (Facemoji).
 
-## Status
+## Repository Setup
 
-Currently in a very early stage, need to get the following things to complete before it is usable in Unity.
+### Option 1: Package Manager
+It is suggested to use the Unity Package Manager to add this repository to your project, with the following URL:  
+`git+https://github.com/BennyKok/mocap4face-unity.git`
 
-Android
-- [x] Initialize the sdk from Unity to mocap4face android native sdk
-- [x] Start the camera tracker from Unity
-- [x] Get back the blend shapes data form native sdk
-- [x] Demo scene
-- [x] Better data passing, from Android to unity;
+In order for this to work, first [install Git LFS](https://git-lfs.github.com/) and [enable it in the Unity Package Manager](https://docs.unity3d.com/Manual/upm-git.html#git-lfs).
 
-iOS
-- [ ] Not yet started
+![Screenshot of Unity -> Window menu -> Package Manager](.screenshots/pacman1.png)
+![Screenshot of Plus (+) button -> Add package from Git URL](.screenshots/pacman2.png)
+![Screenshot of pasting in URL and Add button](.screenshots/pacman3.png)
 
-## Setup
+### Option 2: Submodule
 
-Suggested to clone this as submodule into your packages folder
+Alternatively, clone this repository as a submodule in your project's `Packages` directory:  
+`git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/mocap4face-unity`
 
+This option is _not_ recommended if you are working in a team or intend to redistribute the code,
+since most of the `Packages/` directory is meant to be excluded from version control.
 
-```
-git submodule add https://github.com/BennyKok/mocap4face-unity.git Packages/mocap4face-unity 
-```
+## Per-Platform Setup
 
-### Android Requirements
-- This package uses [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver), please set it up first!
-- The mocap4face aar library is not included, you will need to download in the Facemoji discord server #Dev channel ([message link](https://discord.com/channels/904757187522478131/905871468972343307/907051992915001345)), which require 0.2.0+, after downloading, put it into the Plugin/Android folder in your Assets dir.
+### Android
+- This package uses [External Dependency Manager for Unity](https://github.com/googlesamples/unity-jar-resolver), please set it up first.
+- Download the `mocap4face` Android AAR library from the [Facemoji developer portal](https://studio.facemoji.co).
+  - Minimum version is 0.2.0.
+  - See this [Discord message](https://discord.com/channels/904757187522478131/905871468972343307/907051992915001345) for more details.
+- After downloading, copy `mocap4face-x.x.x-SNAPSHOT.aar` into the `Assets/Plugins/Android/Library` directory in your project.
+  - If any directory does not exist, create it.
+- If you encoutered an error about a duplicated Kotlin library, enable these options in the `Publishing` section of Player Settings. Then in the Unity menu bar, choose `Assets > External Dependency Manager > Android Resolver > Force Resolve`.
 
-![](.screenshots/2021-11-18-23-26-52.png)
+![Screenshot of Android Build Settings](./.screenshots/android_build_settings.png)
 
-- If you encoutered error like duplicated kotlin lib, try enabling these options in player settings -> publishing, and then force resolve once again.
-
-![image](https://user-images.githubusercontent.com/18395202/149381299-dda66e37-8b7e-4dda-bf87-63a8e2f96752.png)
-
-
-
-### iOS Requirements
-- Not yet started
+### iOS
+- Download the `mocap4face` iOS framework from the [Facemoji developer portal](https://studio.facemoji.co).
+- After downloading, copy the contents of `Mocap4Face.xcframework/ios-arm64` into the `Assets/Plugins/iOS/Library` directory in your project.
+  - If any directory does not exist, create it.
 
 ## Expected Result
 
-### Android
-Before running the demo scene on your android devices, put in the API key in the inspector.
+### Android and iOS
+Before running the demo scene on your device, put in the API key in the inspector.
 
-![](.screenshots/Screenshot_2021-12-12_155632.png)
+![Screenshot of API key location](./.screenshots/api_key.png)
 
-Then you will be seeing the blendshapes view as below.
+Then you will see the blendshapes view as below.
 
-<img src=".screenshots/Screenshot_20211212-155331.png" width="300"/>
-
-### iOS
-Not yet started
-
-
+<img src=".screenshots/values.png" width="400"/>
 
 ## Development
+Please chime in the Alter Discord for further discussion if you would like to help out with this Unity integration!
 
-Please chime in the Facemoji discord for further discussion if you wanna help out the Unity integration!!
+You can find the Discord link in the page here -> [mocap4face GitHub Page](https://github.com/facemoji/mocap4face).
 
-You can find the discord link in the page here -> [mocap4face GitHub Page](https://github.com/facemoji/mocap4face).
+## Credit
+- Original Unity wrapper with Android support by [Benny Kok (@BennyKok)](https://github.com/BennyKok/).
+- iOS port (including unsafe memory access) by [Thomas Suarez (@tomthecarrot)](https://github.com/tomthecarrot/) from [Teleportal (0xTELEPORTAL)](https://github.com/0xTELEPORTAL/).
